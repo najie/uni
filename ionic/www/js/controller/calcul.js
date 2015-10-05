@@ -40,8 +40,12 @@ app.controller('calculCtrl', function ($rootScope, $scope, $stateParams, $state,
         $scope.result = strResult;
     };
 
-    $scope.pay = function () {
-
+    $scope.borrow = function () {
+        Friend.borrow($scope.friend.friend.id, $scope.result).then(function(response) {
+            console.log($scope.friends[$stateParams.friendIndex].owe, response.data.friend.owe);
+            $scope.friends[$stateParams.friendIndex].owe = response.data.friend.owe;
+            console.log(response);
+        });
     };
 
 });

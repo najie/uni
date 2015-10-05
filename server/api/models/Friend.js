@@ -14,7 +14,7 @@ module.exports = {
         friend: {
             model: 'user'
         },
-        owe: 'integer'
+        owe: 'float'
     }
 };
 

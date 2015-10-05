@@ -44,10 +44,12 @@ app.factory('Friend', function($rootScope, $q, $http) {
                 });
             return deferred.promise;
         },
-        updateDebt: function (friendId, debt) {
+        borrow: function (friendId, borrow) {
             var deferred = $q.defer();
-            $http.put($rootScope.apiUrl + "/friend/"+friendI, {
-                owe: debt
+            $http.post($rootScope.apiUrl + "/friend/borrow", {
+                friendId: friendId,
+                userId: $rootScope.user.id,
+                borrow: borrow
             })
                 .success(function (data) {
                     var response = {
