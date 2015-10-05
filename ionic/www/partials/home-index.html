@@ -1,0 +1,34 @@
+<md-content flex class="home md-padding">
+    <md-list ng-show="requestReceive.length > 0">
+        <h2 class="md-title">Demande d'ami</h2>
+        <md-list-item class="md-1-line border-bottom" ng-repeat="request in requestReceive">
+            <p>{{request.from.pseudo}}</p>
+            <md-button class="md-primary md-raised" ng-click="accepteRequest(request.from.id)">Accepter</md-button>
+            <md-button class="md-primary">Refuser</md-button>
+        </md-list-item>
+
+    </md-list>
+
+    <div class="no-friend" ng-show="friends.length == 0">
+        <p class="md-body-1">
+            Pour commencer, ajoute tes amis
+        </p>
+        <div class="txt-center">
+            <md-button class="md-raised md-accent" ui-sref="home.addFriends">Rechercher des amis</md-button>
+        </div>
+    </div>
+
+    <md-card ng-repeat="friend in friends">
+        <md-card-content>
+            <h2 class="md-title">{{friend.friend.pseudo}} • {{friend.owe}} €</h2>
+        </md-card-content>
+        <div class="md-actions" layout="row" layout-align="end center">
+            <md-button class="md-primary md-raised"
+                       ui-sref="home.calcul({state:'refound', friendIndex: $index})">Rembourser</md-button>
+            <md-button class="md-accent md-raised"
+                       ui-sref="home.calcul({state:'borrow', friendIndex: $index})">Emprunter</md-button>
+        </div>
+    </md-card>
+
+
+</md-content>

@@ -1,0 +1,31 @@
+<md-content>
+    <div class="owe"
+         ng-class="{'refound': state == 'refound',
+         'borrow': state == 'borrow'}">
+        {{result}} €
+    </div>
+    <md-grid-list
+        md-cols-gt-md="12" md-cols-sm="4"
+        md-row-height-gt-md="1:1" md-row-height="1:1"
+        md-gutter="1px">
+        <md-grid-tile
+            ng-repeat="i in [1,2,3,4,5,6,7,8,9, 0]"
+            class="number"
+            ng-click="calculate(i)">
+            {{i}}
+        </md-grid-tile>
+        <md-grid-tile
+            class="number"
+            ng-click="calculate(',')">
+            .
+        </md-grid-tile>
+        <md-grid-tile
+            class="clear"
+            ng-click="result = 0">
+            CLEAR
+        </md-grid-tile>
+    </md-grid-list>
+
+    <md-button class="md-primary md-raised btn-center" ng-show="state == 'refound'" ng-click="pay()">Rembourser</md-button>
+    <md-button class="md-accent md-raised btn-center" ng-show="state == 'borrow'" ng-click="pay()">Emprunter</md-button>
+</md-content>

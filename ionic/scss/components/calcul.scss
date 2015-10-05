@@ -1,0 +1,19 @@
+.number {
+    background: rgb(228, 228, 228);
+    font-size: 2em;
+    font-weight: 200;
+}
+.owe {
+    text-align: center;
+    font-size: 3em;
+    font-weight: 300;
+    font-family: RobotoDraft;
+    padding: 15px 0;
+    &.borrow {
+        background: rgb(238,255,65);
+    }
+    &.refound {
+        background: rgb(0, 188, 212);
+        color: white;
+    }
+}

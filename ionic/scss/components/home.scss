@@ -1,0 +1,27 @@
+.home {
+    .no-friend {
+        p {
+            text-align: center;
+            color: #333;
+        }
+    }
+    md-card {
+        background-color: #F5F5F5;
+    }
+
+}
+.add-friends {
+    .manual {
+        position: absolute;
+        width: 100%;
+        bottom: 20px;
+        text-align: center;
+        p {
+            color: #333;
+        }
+    }
+    .friend-search {
+        background-color: #B2EBF2;
+        padding: 20px;
+    }
+}

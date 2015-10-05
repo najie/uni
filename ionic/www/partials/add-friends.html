@@ -1,0 +1,27 @@
+<div class="add-friends">
+    <md-content>
+        <md-input-container flex class="friend-search">
+            <label>Tappe le pseudo d'un ami</label>
+            <input ng-model="searchPseudo" ng-change="search()">
+        </md-input-container>
+    </md-content>
+
+    <md-content layout-padding class="search-result">
+        <p ng-show="searchResult.length == 0 && searching && searchPseudo != ''">Aucun ami trouvé :(</p>
+        <md-list>
+            <md-list-item class="md-1-line" ng-repeat="userSearch in searchResult">
+                <div class="self" ng-show="userSearch.id == user.id">
+                    <p>{{userSearch.pseudo}} - Mais... c'est toi :D</p>
+                </div>
+                <p ng-hide="userSearch.id == user.id">{{userSearch.pseudo}}</p>
+                <md-button ng-hide="userSearch.id == user.id" class="md-accent md-raised"
+                    ng-click="addFriend(userSearch.id)"
+                    ng-disabled="checkAddBtn(userSearch.id)">Ajouter</md-button>
+            </md-list-item>
+        </md-list>
+    </md-content>
+    <div class="manual">
+        <p>Si votre ami n'a pas de compte Uni,<br>vous pouvez le rajouter manuellement.</p>
+        <md-button class="md-primary">Ajouter un ami manuellement</md-button>
+    </div>
+</div>
