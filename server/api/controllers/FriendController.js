@@ -6,19 +6,27 @@
  */
 
 module.exports = {
-	createFriendRequest: function (req, res) {
-        var user1 = req.param('user1'),
-            user2 = req.param('user2');
+    find: function(req, res) {
+        var userId = req.param('userId');
 
-        Friend.create({user1: user1, user2: user2, owe: 0}).exec(function () {
-            FriendRequest.update({from: friend, to: user}, {status: 'accepted'}).exec(function (error, fr) {
-                console.log(error);
-                Friend.create({user: friend, friend: user, owe: 0}).exec(function (error, friend) {
-                    console.log(error);
-                    res.ok();
-                });
+        if(userId) {
+            Friend.find({or: [{user1: userId}, {user2: userId}]}).exec(function(err, friends) {
+                if(err) {
+                    res.badRequest()
+                }
+                else {
+                    friends.forEach(function(friend) {
+                        //TODO replace userId by user object
+                        // User.findOne(friend.)
+                    });
+                    res.json(friends);
+                }
+
             });
-        });
+        }
+        else {
+            res.json("userId missing").code(500);
+        }
     },
     borrow: function(req, res) {
         var userId = req.param('userId'),
