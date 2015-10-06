@@ -8,11 +8,15 @@
 module.exports = {
 
     attributes: {
-        user: {
+        user1: {
             model: 'user'
         },
-        friend: {
+        user2: {
             model: 'user'
+        },
+        status: {
+            type: 'integer',
+            defaultsTo: 0 //0: friend request not yet accepted, 1: friend
         },
         owe: 'float'
     }

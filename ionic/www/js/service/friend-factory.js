@@ -3,18 +3,38 @@
  */
 app.factory('Friend', function($rootScope, $q, $http) {
     return {
-        add: function(friendId) {
+        acceptFriendRequest: function(friendId) {
             var deferred = $q.defer();
-            $http.post($rootScope.apiUrl+"/friend/createExtend", {
-                user: $rootScope.user.id,
-                friend: friendId
+            $http.put($rootScope.apiUrl+"/friend/", {
+                user1: friendId,
+                user2: $rootScope.user.id
             })
                 .success(function(data) {
                     var response = {
                         status: 'success',
                         data: data
                     };
-                    console.log('Add friend', response);
+                    console.log('Accept friend request', response);
+                    deferred.resolve(response);
+                })
+                .error(function(data) {
+                    data.status = 'error';
+                    deferred.resolve(data);
+                });
+            return deferred.promise;
+        },
+        sendFriendRequest: function(user2Id) {
+            var deferred = $q.defer();
+            $http.post($rootScope.apiUrl+"/friend/", {
+                user1: $rootScope.user.id,
+                user2: user2Id
+            })
+                .success(function(data) {
+                    var response = {
+                        status: 'success',
+                        data: data
+                    };
+                    console.log('Send friend request', response);
                     deferred.resolve(response);
                 })
                 .error(function(data) {
@@ -27,7 +47,12 @@ app.factory('Friend', function($rootScope, $q, $http) {
             var deferred = $q.defer();
             $http.get($rootScope.apiUrl + "/friend/", {
                 params: {
-                    user: $rootScope.user.id
+                    where: {
+                        or: [
+                            {user1: $rootScope.user.id},
+                            {user2: $rootScope.user.id}
+                        ]
+                    }
                 }
             })
                 .success(function (data) {

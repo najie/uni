@@ -1,7 +1,7 @@
 /**
  * Created by najie on 30/09/15.
  */
-app.controller('addFriendsCtrl', function ($rootScope, $scope, $state, User, Friend, FriendRequest) {
+app.controller('addFriendsCtrl', function ($rootScope, $scope, $state, User, Friend) {
     $scope.searchPseudo = null;
     $scope.searchResult = [];
     $scope.searching = false;
@@ -14,17 +14,12 @@ app.controller('addFriendsCtrl', function ($rootScope, $scope, $state, User, Fri
     };
 
     $scope.addFriend = function(friendId) {
-        FriendRequest.create($rootScope.user.id, friendId).then(function (response) {
-            console.log(response);
+        Friend.sendFriendRequest(friendId).then(function (response) {
             $scope.searchResult = [];
             $scope.searchPseudo = null;
             $scope.searching = false;
-            FriendRequest.findSent($rootScope.user.id).then(function (response) {
-                $scope.requestSent = response.data;
-                $scope.requestSentIds = [];
-                response.data.forEach(function (request) {
-                    $scope.requestSentIds.push(request.to.id);
-                });
+            Friend.find().then(function (response) {
+
             });
         });
     };

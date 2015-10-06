@@ -4,7 +4,7 @@
 /**
  * Created by najie on 30/09/15.
  */
-app.controller('homeCtrl', function ($rootScope, $scope, $state, $mdSidenav, $mdUtil, Friend, FriendRequest) {
+app.controller('homeCtrl', function ($rootScope, $scope, $state, $mdSidenav, $mdUtil, Friend) {
 
     $scope.toolbarPrevious = function() {
         console.log('toolbar prev');
@@ -41,32 +41,15 @@ app.controller('homeCtrl', function ($rootScope, $scope, $state, $mdSidenav, $md
                     $scope.friendIds.push(friend.friend.id);
                 });
             });
-
-            FriendRequest.findSent().then(function (response) {
-                $scope.requestSent = response.data;
-                response.data.forEach(function (request) {
-                    $scope.requestSentIds.push(request.to.id);
-                });
-            });
-            FriendRequest.findReceive().then(function (response) {
-                $scope.requestReceive = response.data;
-                response.data.forEach(function (request) {
-                    $scope.requestReceiveIds.push(request.from.id);
-                });
-            });
-
         }
     });
 
     $scope.accepteRequest = function (fromId) {
-        Friend.add(fromId).then(function (response) {
+        Friend.acceptFriendRequest(fromId).then(function (response) {
             Friend.find().then(function (response) {
                 $scope.friends = response.data;
             });
-            FriendRequest.findReceive().then(function (response) {
-                $scope.requestReceive = response.data;
-            })
-        })
+        });
     };
 
     $scope.disconnect = function () {

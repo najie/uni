@@ -6,11 +6,11 @@
  */
 
 module.exports = {
-	createExtend: function (req, res) {
-        var user = req.param('user'),
-            friend = req.param('friend');
+	createFriendRequest: function (req, res) {
+        var user1 = req.param('user1'),
+            user2 = req.param('user2');
 
-        Friend.create({user: user, friend: friend, owe: 0}).exec(function () {
+        Friend.create({user1: user1, user2: user2, owe: 0}).exec(function () {
             FriendRequest.update({from: friend, to: user}, {status: 'accepted'}).exec(function (error, fr) {
                 console.log(error);
                 Friend.create({user: friend, friend: user, owe: 0}).exec(function (error, friend) {
@@ -42,7 +42,7 @@ module.exports = {
                         if(hisFriend) {
                             var hisDebt = hisFriend.owe + borrowVal;
                             Friend.update(hisFriend.id, {owe:hisDebt}).exec(function() {
-                                res.json({status: 'success', friend: myFriend });
+                                res.json({status: 'success', owe: myDebt });
                             });
                         }
                     });

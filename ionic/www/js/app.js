@@ -42,7 +42,7 @@ app.run(function ($rootScope, $ionicPlatform, $state, $location, User) {
                     $state.go('home.index');
             }
             else {
-                window.localStorage['session'] = null;
+                delete window.localStorage['session'];
             }
         });
     }

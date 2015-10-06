@@ -14,11 +14,7 @@ module.exports = {
         },
         firstname: 'string',
         lastname: 'string',
-        password: 'string',
-        friends: {
-            collection: 'friend',
-            via: 'user'
-        }
+        password: 'string'
     },
     beforeCreate: function (attrs, next) {
         var bcrypt = require('bcrypt');
