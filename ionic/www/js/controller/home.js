@@ -29,10 +29,6 @@ app.controller('homeCtrl', function ($rootScope, $scope, $state, $mdSidenav, $md
 
     $scope.friendIds = [];
     $scope.friends = [];
-    $scope.requestSent = [];
-    $scope.requestReceive = [];
-    $scope.requestSentIds = [];
-    $scope.requestReceiveIds = [];
     $scope.$watch('user', function (newVal, oldVal) {
         if(newVal) {
             Friend.find().then(function (response) {
@@ -44,12 +40,15 @@ app.controller('homeCtrl', function ($rootScope, $scope, $state, $mdSidenav, $md
         }
     });
 
-    $scope.accepteRequest = function (fromId) {
+    $scope.acceptFriendRequest = function (fromId) {
         Friend.acceptFriendRequest(fromId).then(function (response) {
             Friend.find().then(function (response) {
                 $scope.friends = response.data;
             });
         });
+    };
+    $scope.hideFriendRequest = function (fromId) {
+
     };
 
     $scope.disconnect = function () {

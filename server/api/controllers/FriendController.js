@@ -15,13 +15,25 @@ module.exports = {
                     res.badRequest()
                 }
                 else {
+                    var formatedFriends = [],
+                        i = 0;
                     friends.forEach(function(friend) {
-                        //TODO replace userId by user object
-                        // User.findOne(friend.)
+                        var friendId = null;
+                        if(friend.user1 == userId) {
+                            friendId = friend.user2;
+                        }
+                        else {
+                            friendId = friend.user1;
+                        }
+                        User.findOne(friendId).exec(function (err, userFriend) {
+                            i++;
+                            formatedFriends.push({friend: userFriend, owe: friend.owe, status: friend.status, id: friend.id});
+                            if(i == friends.length) {
+                                res.json(formatedFriends);
+                            }
+                        });
                     });
-                    res.json(friends);
                 }
-
             });
         }
         else {

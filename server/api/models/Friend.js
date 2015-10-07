@@ -18,7 +18,10 @@ module.exports = {
             type: 'integer',
             defaultsTo: 0 //0: friend request not yet accepted, 1: friend
         },
-        owe: 'float'
+        owe: {
+            defaultsTo: 0,
+            type: 'float'
+        }
     }
 };
 

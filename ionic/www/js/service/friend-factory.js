@@ -5,9 +5,8 @@ app.factory('Friend', function($rootScope, $q, $http) {
     return {
         acceptFriendRequest: function(friendId) {
             var deferred = $q.defer();
-            $http.put($rootScope.apiUrl+"/friend/", {
-                user1: friendId,
-                user2: $rootScope.user.id
+            $http.put($rootScope.apiUrl+"/friend/"+friendId, {
+                status: 1
             })
                 .success(function(data) {
                     var response = {
@@ -47,12 +46,7 @@ app.factory('Friend', function($rootScope, $q, $http) {
             var deferred = $q.defer();
             $http.get($rootScope.apiUrl + "/friend/", {
                 params: {
-                    where: {
-                        or: [
-                            {user1: $rootScope.user.id},
-                            {user2: $rootScope.user.id}
-                        ]
-                    }
+                    userId: $rootScope.user.id
                 }
             })
                 .success(function (data) {
