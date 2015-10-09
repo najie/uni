@@ -64,7 +64,7 @@ body {
 *:active, *:focus {
   outline: 0; }
 
-.number {
+.pad-number {
   background: #e4e4e4;
   font-size: 2em;
   font-weight: 200; }
@@ -72,8 +72,6 @@ body {
 .owe {
   text-align: center;
   font-size: 3em;
-  font-weight: 300;
-  font-family: RobotoDraft;
   padding: 15px 0; }
   .owe.borrow {
     background: #eeff41; }
@@ -91,3 +89,7 @@ body {
 
 .border-bottom {
   border-bottom: 1px solid #D2D2D2; }
+
+.number {
+  font-family: RobotoDraft;
+  font-weight: 300; }

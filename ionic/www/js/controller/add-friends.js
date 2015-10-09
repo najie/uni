@@ -19,19 +19,15 @@ app.controller('addFriendsCtrl', function ($rootScope, $scope, $state, User, Fri
             $scope.searchPseudo = null;
             $scope.searching = false;
             Friend.find().then(function (response) {
-
+                $scope.friends = response.data;
             });
         });
     };
 
     $scope.checkAddBtn = function (userSearchId) {
         var found = false;
-        $scope.requestSent.forEach(function (request) {
-            if(request.to.id == userSearchId) {
-                found = true;
-            }
-        });
         $scope.friends.forEach(function (friend) {
+            console.log(friend);
             if(friend.friend.id == userSearchId)
                 found = true;
         });

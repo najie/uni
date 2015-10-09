@@ -6,20 +6,20 @@
  */
 
 module.exports = {
-    find: function(req, res) {
+    find: function (req, res) {
         var userId = req.param('userId');
 
-        if(userId) {
-            Friend.find({or: [{user1: userId}, {user2: userId}]}).exec(function(err, friends) {
-                if(err) {
+        if (userId) {
+            Friend.find({or: [{user1: userId}, {user2: userId}]}).exec(function (err, friends) {
+                if (err) {
                     res.badRequest()
                 }
                 else {
                     var formatedFriends = [],
                         i = 0;
-                    friends.forEach(function(friend) {
+                    friends.forEach(function (friend) {
                         var friendId = null;
-                        if(friend.user1 == userId) {
+                        if (friend.user1 == userId) {
                             friendId = friend.user2;
                         }
                         else {
@@ -27,8 +27,14 @@ module.exports = {
                         }
                         User.findOne(friendId).exec(function (err, userFriend) {
                             i++;
-                            formatedFriends.push({friend: userFriend, owe: friend.owe, status: friend.status, id: friend.id});
-                            if(i == friends.length) {
+                            formatedFriends.push({
+                                friend: userFriend,
+                                owe: friend.owe,
+                                status: friend.status,
+                                id: friend.id,
+                                fromId: friend.user1
+                            });
+                            if (i == friends.length) {
                                 res.json(formatedFriends);
                             }
                         });
@@ -40,38 +46,36 @@ module.exports = {
             res.json("userId missing").code(500);
         }
     },
-    borrow: function(req, res) {
+    updateDebt: function (req, res) {
         var userId = req.param('userId'),
             friendId = req.param('friendId'),
-            borrowVal = req.param('borrow')+'';
+            val = req.param('val') + '';
 
-        if(borrowVal.search(',') !== -1)
-            borrowVal = parseFloat(borrowVal.replace(',','.'));
+        if (val.search(',') !== -1)
+            val = parseFloat(val.replace(',', '.'));
         else
-            borrowVal = parseInt(borrowVal);
+            val = parseFloat(val);
 
-        console.log(userId, friendId, borrowVal);
+        console.log(userId, friendId, val);
 
-        Friend.findOne({user: userId, friend: friendId}).exec(function(err, myFriend) {
-            console.log(err, myFriend);
-            if(myFriend) {
-                var myDebt = myFriend.owe - borrowVal;
-                Friend.update(myFriend.id, {owe:myDebt}).exec(function(){
-                    Friend.findOne({friend: userId, user: friendId}).exec(function(err, hisFriend) {
-                        console.log(err, hisFriend);
-                        if(hisFriend) {
-                            var hisDebt = hisFriend.owe + borrowVal;
-                            Friend.update(hisFriend.id, {owe:hisDebt}).exec(function() {
-                                res.json({status: 'success', owe: myDebt });
-                            });
-                        }
+        Friend.findOne(
+            {
+                or: [
+                    {user1: userId, user2: friendId},
+                    {user1: friendId, user2: userId}
+                ]
+            }).exec(function (err, friend) {
+                console.log(err, friend);
+                if (friend) {
+                    var myDebt = friend.owe + (val);
+                    Friend.update(friend.id, {owe: myDebt}).exec(function () {
+                        res.json({owe: myDebt});
                     });
-                });
-            }
-            else {
-                res.json({status: 'not found'});
-            }
-        });
+                }
+                else {
+                    res.notFound();
+                }
+            });
     }
 };
 

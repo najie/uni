@@ -2,49 +2,70 @@
  * Created by najie on 30/09/15.
  */
 app.controller('calculCtrl', function ($rootScope, $scope, $stateParams, $state, Friend) {
-    $scope.result = 0;
-    $scope.state = $stateParams.state;
+    $scope.result = "0";
+    $scope.calculState = $stateParams.state;
+    $scope.buttonLabel = 'Valider';
 
     $scope.$watch('friends', function (newVal, oldVal) {
-        if(newVal) {
+        if(newVal.length > 0) {
             $scope.friend = $scope.friends[$stateParams.friendIndex];
+            if($scope.calculState == 'refound' && $scope.friend.owe < 0) {
+                $scope.result = $scope.friend.owe*-1+"";
+                $scope.buttonLabel = 'Rembourser';
+            }
+            else if($scope.calculState == 'refound' && $scope.friend.owe >= 0)
+                $scope.buttonLabel = 'Avancer';
         }
     });
 
+    if($scope.calculState == 'borrow') {
+        $scope.buttonLabel = 'Emprunter';
+    }
+
     $scope.calculate = function (val) {
-        var strResult = $scope.result+"";
+        var floatResult = parseFloat($scope.result.replace(',', '.')),
+            decimal = false;
 
-        if(strResult.split(',')[1] && strResult.split(',')[1].length >= 2) {
-            return;
-        }
-        console.log(strResult, strResult.search(','));
-        if(val == ',' && (strResult.search(',') !== -1 || strResult == 0)) {
-            return;
-        }
-        else {
-            $scope.result += ',';
+        if($scope.result.search(',') !== -1) {
+            decimal = true;
+            if($scope.result.split(',')[1].length === 2)
+                return;
         }
 
-        if(strResult == 0)
-            strResult = val;
-        else
-            strResult += val+"";
 
-
-        if(strResult >= 9999) {
-            strResult = 9999;
+        if(val === ',') {
+            if(floatResult === 0) {
+                $scope.result = '0,';
+            }
+            else {
+                $scope.result += ',';
+            }
+        }else {
+            if(floatResult === 0 && !decimal) {
+                $scope.result = val+"";
+            }
+            else {
+                $scope.result += val+"";
+            }
         }
 
-        //strResult = strResult.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-        $scope.result = strResult;
+        if(floatResult >= 999) {
+            $scope.result = "9999";
+        }
     };
 
     $scope.borrow = function () {
-        Friend.borrow($scope.friend.friend.id, $scope.result).then(function(response) {
-            console.log($scope.friends[$stateParams.friendIndex].owe, response.data.friend.owe);
-            $scope.friends[$stateParams.friendIndex].owe = response.data.friend.owe;
-            console.log(response);
+        Friend.updateDebt($scope.friend.friend.id, '-'+$scope.result).then(function(response) {
+            $scope.friends[$stateParams.friendIndex].owe = response.data.owe;
+            $state.go('home.index');
+        });
+    };
+
+    $scope.refound = function () {
+        Friend.updateDebt($scope.friend.friend.id, $scope.result).then(function(response) {
+            $scope.friends[$stateParams.friendIndex].owe = response.data.owe;
+            $state.go('home.index');
         });
     };
 
