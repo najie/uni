@@ -12,7 +12,8 @@
     <span ng-repeat="friend in friends">
         <md-card ng-if="friend.status == 1">
             <md-card-content>
-                <h2 class="md-title">{{friend.friend.pseudo}} • <span class="number">{{friend.owe}}</span> €</h2>
+                <h2 class="md-title">{{friend.friend.pseudo}} •
+                    <span class="number">{{friend.owe}}</span> €</h2>
             </md-card-content>
             <div class="md-actions" layout="row" layout-align="end center">
                 <md-button class="md-primary md-raised"

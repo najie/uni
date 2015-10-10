@@ -21,6 +21,9 @@ module.exports = {
         owe: {
             defaultsTo: 0,
             type: 'float'
+        },
+        negativeFor: {
+            model: 'user'
         }
     }
 };

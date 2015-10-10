@@ -27,6 +27,12 @@ module.exports = {
                         }
                         User.findOne(friendId).exec(function (err, userFriend) {
                             i++;
+                            if(friend.negativeFor == userId && friend.owe > 0) {
+                                friend.owe *= -1;
+                            }
+                            else if(friend.negativeFor == friendId && friend.owe < 0)
+                                friend.owe *= -1;
+
                             formatedFriends.push({
                                 friend: userFriend,
                                 owe: friend.owe,
@@ -56,8 +62,6 @@ module.exports = {
         else
             val = parseFloat(val);
 
-        console.log(userId, friendId, val);
-
         Friend.findOne(
             {
                 or: [
@@ -65,11 +69,27 @@ module.exports = {
                     {user1: friendId, user2: userId}
                 ]
             }).exec(function (err, friend) {
-                console.log(err, friend);
                 if (friend) {
-                    var myDebt = friend.owe + (val);
-                    Friend.update(friend.id, {owe: myDebt}).exec(function () {
-                        res.json({owe: myDebt});
+                    var negativeFor = userId;
+
+                    if(friend.owe >= 0 && friend.negativeFor == userId) {
+                        friend.owe *= -1;
+                    }
+                    else if(friend.owe < 0 && friend.negativeFor == friendId) {
+                        friend.owe *= -1;
+                    }
+
+                    var debt = friend.owe + (val);
+
+                    if(debt > 0)
+                        negativeFor = friendId;
+                    else if(debt === 0)
+                        negativeFor = null;
+
+                    console.log("Dette:"+debt, " | Negative for:"+negativeFor, " | Current User:"+userId);
+
+                    Friend.update(friend.id, {owe: debt, negativeFor:negativeFor}).exec(function () {
+                        res.json({owe: debt, negativeFor:negativeFor});
                     });
                 }
                 else {
