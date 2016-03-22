@@ -24,7 +24,7 @@ app.controller('loginCtrl', function ($rootScope, $scope, $state, User) {
             if(response.status == 'success') {
                 window.localStorage['session'] = response.data.id;
                 $rootScope.user = response.data;
-                $state.go('home.index');
+                $state.go('app.home');
             }
         });
     };

@@ -10,7 +10,7 @@ var app = angular.module('starter', [
     'ngMessages'
 ]);
 
-app.run(function ($rootScope, $ionicPlatform, $state, $location, User) {
+app.run(function ($rootScope, $ionicPlatform, $state, $location, User, $mdSidenav, $mdUtil) {
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -20,11 +20,45 @@ app.run(function ($rootScope, $ionicPlatform, $state, $location, User) {
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
+
+        $rootScope.showSidebar = buildToggler('left');
+        $rootScope.hideSidebar = function () {
+            $mdSidenav('left').close()
+                .then(function () {
+                });
+        };
+        function buildToggler(navID) {
+            var debounceFn =  $mdUtil.debounce(function(){
+                $mdSidenav(navID)
+                    .toggle()
+                    .then(function () {
+                    });
+            },100);
+            return debounceFn;
+        }
+
+        $rootScope.disconnect = function () {
+            delete window.localStorage['session'];
+            $state.go('login');
+        };
+        $rootScope.toolbarPrevious = function() {
+            $state.go('app.home');
+        };
+
     });
 
-    $rootScope.baseUrl = $location.protocol()+"://"+$location.host()+":"+$location.port()+"/uni";
-    $rootScope.mobileUrl = $rootScope.baseUrl+"/ionic/www";
-    $rootScope.apiUrl = 'http://localhost:1337';
+    switch ($location.host()) {
+        case 'localhost':
+            $rootScope.baseUrl = $location.protocol()+"://"+$location.host()+":"+$location.port()+"/uni";
+            $rootScope.mobileUrl = $rootScope.baseUrl+"/ionic/www";
+            $rootScope.apiUrl = 'http://localhost:1337';
+            break;
+        default:
+            $rootScope.baseUrl = $location.protocol()+"://"+$location.host()+":"+$location.port()+"/uni";
+            $rootScope.mobileUrl = $rootScope.baseUrl+"/ionic/www";
+            $rootScope.apiUrl = 'http://localhost:1337';
+            break;
+    }
 
     $rootScope.$on("$stateChangeStart", function(event, toState, from) {
         console.log(toState.name);
@@ -33,13 +67,14 @@ app.run(function ($rootScope, $ionicPlatform, $state, $location, User) {
     });
 
     $rootScope.user = null;
+    $rootScope.friends = [];
     $rootScope.session = window.localStorage['session'];
     if($rootScope.session) {
         User.findOne($rootScope.session).then(function(response) {
             if(response.status == 'success') {
                 $rootScope.user = response.data;
                 if($rootScope.state == 'login' || $rootScope.state == 'register')
-                    $state.go('home.index');
+                    $state.go('app.home');
             }
             else {
                 delete window.localStorage['session'];
@@ -53,28 +88,29 @@ app.config(['$mdThemingProvider', '$stateProvider', '$urlRouterProvider', '$loca
         $urlRouterProvider.otherwise("/");
 
         $stateProvider
-            .state('register', {
-                url: "/register",
-                templateUrl: "partials/register.html",
-                controller: 'registerCtrl'
-            })
             .state('login', {
                 url: "/",
                 templateUrl: "partials/login.html",
                 controller: 'loginCtrl'
             })
-            .state('home', {
-                url:'/uni',
-                templateUrl: 'partials/home.html',
+            .state('register', {
+                url: "/register",
+                templateUrl: "partials/register.html",
+                controller: 'registerCtrl'
+            })
+            .state('app', {
+                url:'/app',
+                templateUrl: 'partials/app.html',
                 controller: 'homeCtrl'
-            }).state('home.index', {
-                url:'/index',
-                templateUrl: 'partials/home-index.html'
-            }).state('home.addFriends', {
+            })
+            .state('app.home', {
+                url:'/home',
+                templateUrl: 'partials/home.html',
+            }).state('app.addFriends', {
                 url:'/add-friends',
                 templateUrl: 'partials/add-friends.html',
                 controller: 'addFriendsCtrl'
-            }).state('home.calcul', {
+            }).state('app.calcul', {
                 url:'/calcul/:friendIndex?state',
                 templateUrl: 'partials/calcul.html',
                 controller: 'calculCtrl'

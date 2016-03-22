@@ -1,6 +1,9 @@
-@import "components/home";
-@import "components/login";
-@import "components/register";
-@import "components/body";
-@import "components/calcul";
+@import "src/global/override";
+@import "src/global/body";
+
+@import "src/view/home";
+@import "src/view/add-friends";
+@import "src/view/login";
+@import "src/view/register";
+@import "src/view/calcul";
 @import "utils";

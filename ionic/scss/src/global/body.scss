@@ -1,0 +1,17 @@
+body {
+    font-family: raleway;
+    &.register, &.login {
+        background: -webkit-linear-gradient(-20deg, #41FFEE, #1891C6);
+        h1 {
+            font-weight: 100;
+            color: #FFF;
+        }
+        .md-default-theme {
+            background: transparent;
+        }
+    }
+}
+
+*:active, *:focus {
+    outline: 0;
+}

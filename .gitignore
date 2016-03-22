@@ -6,6 +6,12 @@ platforms/
 plugins/
 server/node_modules/
 ionic/node_modules/
-.DS_Store
-*.DS_Store
+.tmp
+.sass-cache
+ionic/www/lib/
+ionic/platforms/
+ionic/plugins/
+*.swp
+*.swo
+*.log
 .idea/*

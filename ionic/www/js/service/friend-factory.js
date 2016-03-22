@@ -3,6 +3,7 @@
  */
 app.factory('Friend', function($rootScope, $q, $http) {
     return {
+        friends: [],
         acceptFriendRequest: function(friendId) {
             var deferred = $q.defer();
             $http.put($rootScope.apiUrl+"/friend/"+friendId, {

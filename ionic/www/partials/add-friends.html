@@ -1,6 +1,18 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings">
+            <md-icon md-svg-icon="img/icons/arrow-left.svg"
+                     ng-click="toolbarPrevious()"
+                     ng-show="state !== 'home.index'"></md-icon>
+        </md-button>
+        <h2>
+            <span>Uni - {{user.pseudo}}</span>
+        </h2>
+    </div>
+</md-toolbar>
 <div class="add-friends">
-    <md-content>
-        <md-input-container flex class="friend-search">
+    <md-content layout="row" class="friend-search">
+        <md-input-container flex>
             <label>Tappe le pseudo d'un ami</label>
             <input ng-model="searchPseudo" ng-change="search()">
         </md-input-container>
@@ -20,7 +32,7 @@
             </md-list-item>
         </md-list>
     </md-content>
-    <div class="manual">
+    <div class="manual hide">
         <p>Si votre ami n'a pas de compte Uni,<br>vous pouvez le rajouter manuellement.</p>
         <md-button class="md-primary">Ajouter un ami manuellement</md-button>
     </div>

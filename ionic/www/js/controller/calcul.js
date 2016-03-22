@@ -4,19 +4,6 @@
 app.controller('calculCtrl', function ($rootScope, $scope, $stateParams, $state, Friend) {
     $scope.result = "0";
     $scope.calculState = $stateParams.state;
-    $scope.buttonLabel = 'Valider';
-
-    $scope.$watch('friends', function (newVal, oldVal) {
-        if(newVal.length > 0) {
-            $scope.friend = $scope.friends[$stateParams.friendIndex];
-            if($scope.calculState == 'refound' && $scope.friend.owe < 0) {
-                $scope.result = $scope.friend.owe*-1+"";
-                $scope.buttonLabel = 'Rembourser';
-            }
-            else if($scope.calculState == 'refound' && $scope.friend.owe >= 0)
-                $scope.buttonLabel = 'Avancer';
-        }
-    });
 
     if($scope.calculState == 'borrow') {
         $scope.buttonLabel = 'Emprunter';
@@ -31,7 +18,6 @@ app.controller('calculCtrl', function ($rootScope, $scope, $stateParams, $state,
             if($scope.result.split(',')[1].length === 2)
                 return;
         }
-
 
         if(val === ',') {
             if(floatResult === 0) {
@@ -49,24 +35,23 @@ app.controller('calculCtrl', function ($rootScope, $scope, $stateParams, $state,
             }
         }
 
-
         if(floatResult >= 999) {
             $scope.result = "9999";
         }
     };
 
-    $scope.borrow = function () {
-        Friend.updateDebt($scope.friend.friend.id, '-'+$scope.result).then(function(response) {
-            $scope.friends[$stateParams.friendIndex].owe = response.data.owe;
-            $state.go('home.index');
-        });
-    };
-
-    $scope.refound = function () {
-        Friend.updateDebt($scope.friend.friend.id, $scope.result).then(function(response) {
-            $scope.friends[$stateParams.friendIndex].owe = response.data.owe;
-            $state.go('home.index');
-        });
-    };
-
+    $scope.confirm = function () {
+        if($scope.calculState == 'refound') {
+            Friend.updateDebt($scope.friend.friend.id, $scope.result).then(function(response) {
+                $scope.friends[$stateParams.friendIndex].owe = response.data.owe;
+                $state.go('app.home');
+            });
+        }
+        else {
+            Friend.updateDebt($scope.friend.friend.id, '-'+$scope.result).then(function(response) {
+                $scope.friends[$stateParams.friendIndex].owe = response.data.owe;
+                $state.go('app.home');
+            });
+        }
+    }
 });

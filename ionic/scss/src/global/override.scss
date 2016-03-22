@@ -1,0 +1,8 @@
+md-content {
+    background: transparent;
+}
+md-toolbar:not(.md-menu-toolbar) {
+    &, md-icon {
+        color: white;
+    }
+}

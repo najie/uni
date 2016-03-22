@@ -1,0 +1,20 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+    <md-toolbar class="md-theme-light">
+        <div class="md-toolbar-tools">
+            <h1>Menu</h1>
+            <span flex></span>
+            <md-icon md-svg-icon="img/icons/close.svg"
+                     ng-click="hideSidebar()"></md-icon>
+        </div>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-list>
+            <md-list-item class="md-3-line">
+                <md-button ng-click="disconnect()" class="md-primary">
+                    Déconnexion
+                </md-button>
+            </md-list-item>
+        </md-list>
+
+    </md-content>
+</md-sidenav>

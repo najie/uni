@@ -2,6 +2,11 @@
   "name": "HelloIonic",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.1.0"
+    "ionic": "driftyco/ionic-bower#1.2.4"
+  },
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-material": "^1.0.6",
+    "animate.css": "^3.5.1"
   }
 }

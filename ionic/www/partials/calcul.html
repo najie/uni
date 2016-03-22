@@ -1,3 +1,17 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings">
+            <md-icon md-svg-icon="img/icons/arrow-left.svg"
+                     ng-click="toolbarPrevious()"
+                     ng-show="state !== 'app.home'"></md-icon>
+        </md-button>
+        <h2>
+            <span>{{toolbarTitle}}</span>
+        </h2>
+        <span flex></span>
+        <md-icon md-svg-icon="img/icons/check.svg" ng-click="confirm()"></md-icon>
+    </div>
+</md-toolbar>
 <md-content>
     <div class="owe number"
          ng-class="{'refound': calculState == 'refound',
@@ -5,9 +19,8 @@
         {{result}} €
     </div>
     <md-grid-list
-        md-cols-gt-md="12" md-cols-sm="4"
-        md-row-height-gt-md="1:1" md-row-height="1:1"
-        md-gutter="1px">
+        md-cols-gt-md="12" md-cols="3" md-cols-md="8"
+        md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter="1px">
         <md-grid-tile
             ng-repeat="i in [1,2,3,4,5,6,7,8,9,0]"
             class="pad-number"
@@ -25,11 +38,4 @@
             CLEAR
         </md-grid-tile>
     </md-grid-list>
-
-    <md-button class="md-primary md-raised btn-center"
-               ng-show="calculState == 'refound'"
-               ng-click="refound()">{{buttonLabel}}</md-button>
-    <md-button class="md-accent md-raised btn-center"
-               ng-show="calculState == 'borrow'"
-               ng-click="borrow()">{{buttonLabel}}</md-button>
 </md-content>

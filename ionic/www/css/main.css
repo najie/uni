@@ -1,3 +1,22 @@
+md-content {
+  background: transparent; }
+
+md-toolbar:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) md-icon {
+  color: white; }
+
+body {
+  font-family: raleway; }
+  body.register, body.login {
+    background: -webkit-linear-gradient(-20deg, #41FFEE, #1891C6); }
+    body.register h1, body.login h1 {
+      font-weight: 100;
+      color: #FFF; }
+    body.register .md-default-theme, body.login .md-default-theme {
+      background: transparent; }
+
+*:active, *:focus {
+  outline: 0; }
+
 .home .no-friend p {
   text-align: center;
   color: #333; }
@@ -12,7 +31,6 @@
   .add-friends .manual p {
     color: #333; }
 .add-friends .friend-search {
-  background-color: #eeff41;
   padding: 20px; }
 
 .login {
@@ -32,37 +50,6 @@
     text-align: left; }
   .register h2 {
     color: #fff; }
-
-body {
-  font-family: raleway; }
-  body.register, body.login {
-    background: -webkit-linear-gradient(-20deg, #41FFEE, #1891C6);
-    /*background: rgb(0, 188, 212);
-
-
-        .md-input {
-            color: rgba(255,255,255,1.0);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-        label {
-            color: white;
-        }
-        .md-input-focused {
-            label {
-                color: white;
-            }
-            .md-input {
-                border-color: rgba(255, 255, 255, 0.51);
-            }
-        }*/ }
-    body.register h1, body.login h1 {
-      font-weight: 100;
-      color: #FFF; }
-    body.register .md-default-theme, body.login .md-default-theme {
-      background: transparent; }
-
-*:active, *:focus {
-  outline: 0; }
 
 .pad-number {
   background: #e4e4e4;
