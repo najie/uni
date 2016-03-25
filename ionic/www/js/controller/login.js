@@ -7,6 +7,12 @@ app.controller('loginCtrl', function ($rootScope, $scope, $state, User) {
         password: null
     };
 
+    if(window.localStorage['session']) {
+        console.log('login -> home');
+        $state.go('app.home');
+    }
+
+
     $scope.submit = function () {
         $scope.error = {
             badPassword: false,

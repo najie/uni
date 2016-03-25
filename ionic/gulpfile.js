@@ -14,7 +14,7 @@ var paths = {
 gulp.task('default', ['sass']);
 
 gulp.task('sass', function(done) {
-    gulp.src('./scss/main.scss')
+    gulp.src('./scss/ionic.app.scss')
         .pipe(sass({
             errLogToConsole: true
         }))

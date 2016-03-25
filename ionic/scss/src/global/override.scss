@@ -6,3 +6,42 @@ md-toolbar:not(.md-menu-toolbar) {
         color: white;
     }
 }
+input[type="password"] {
+    border: inherit;
+}
+
+h2 {
+    font-family: raleway;
+    line-height: 1;
+}
+md-toolbar, md-toolbar-tools {
+    h1, h2 {
+        color: white;
+        font-family: raleway;
+    }
+}
+a.md-button.md-primary {
+    color: white!important;
+}
+
+.platform-ios {
+    md-toolbar {
+        padding-top: 12px;
+    }
+    .has-header {
+        top: 68px;
+    }
+}
+.has-header {
+    top: 56px;
+}
+
+md-icon svg {
+    fill: inherit;
+}
+.scroll-100 {
+    .scroll {
+        min-height: 100%;
+    }
+}
+

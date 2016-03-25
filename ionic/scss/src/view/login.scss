@@ -1,11 +1,44 @@
+.login-bg {
+    background: -webkit-linear-gradient(-20deg, #41FFEE, #1891C6);
+    -webkit-background-size:cover;
+}
 .login {
     text-align: center;
+    padding-top: 15%;
+    height: 100%;
+    h1 {
+        font-weight: 100;
+        font-family: Raleway;
+        color: #FFF;
+    }
+    h2 {
+        color: #fff;
+    }
+    .md-default-theme {
+        background: transparent;
+    }
     form {
         margin: 10% 0 0;
         padding: 0 10%;
         text-align: left;
     }
-    h2 {
-        color: #fff;
+
+    md-input-container:not(.md-input-invalid).md-input-focused {
+        input, input[type="password"]  {
+            border-color: rgba(255, 255, 255, 0.62);
+        }
+        label {
+            color: #fff;
+        }
+    }
+    input, input[type="password"]  {
+        border-color: rgba(255, 255, 255, 0.62);
+    }
+    label {
+        color: white;
+    }
+
+    md-input-container {
+        margin: 10px 0;
     }
 }

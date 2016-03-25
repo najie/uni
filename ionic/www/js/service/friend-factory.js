@@ -6,7 +6,7 @@ app.factory('Friend', function($rootScope, $q, $http) {
         friends: [],
         acceptFriendRequest: function(friendId) {
             var deferred = $q.defer();
-            $http.put($rootScope.apiUrl+"/friend/"+friendId, {
+            $http.put($rootScope.apiUrl+"friend/"+friendId, {
                 status: 1
             })
                 .success(function(data) {
@@ -25,7 +25,7 @@ app.factory('Friend', function($rootScope, $q, $http) {
         },
         sendFriendRequest: function(user2Id) {
             var deferred = $q.defer();
-            $http.post($rootScope.apiUrl+"/friend/", {
+            $http.post($rootScope.apiUrl+"friend/", {
                 user1: $rootScope.user.id,
                 user2: user2Id
             })
@@ -43,11 +43,11 @@ app.factory('Friend', function($rootScope, $q, $http) {
                 });
             return deferred.promise;
         },
-        find: function() {
+        find: function(userId) {
             var deferred = $q.defer();
-            $http.get($rootScope.apiUrl + "/friend/", {
+            $http.get($rootScope.apiUrl + "friend/", {
                 params: {
-                    userId: $rootScope.user.id
+                    userId: userId
                 }
             })
                 .success(function (data) {
@@ -66,7 +66,7 @@ app.factory('Friend', function($rootScope, $q, $http) {
         },
         updateDebt: function (friendId, val) {
             var deferred = $q.defer();
-            $http.post($rootScope.apiUrl + "/friend/updateDebt", {
+            $http.post($rootScope.apiUrl + "friend/updateDebt", {
                 friendId: friendId,
                 userId: $rootScope.user.id,
                 val: val

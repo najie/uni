@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', [
+var app = angular.module('uni', [
     'ionic',
     'ngMaterial',
     'ui.router',
@@ -23,9 +23,7 @@ app.run(function ($rootScope, $ionicPlatform, $state, $location, User, $mdSidena
 
         $rootScope.showSidebar = buildToggler('left');
         $rootScope.hideSidebar = function () {
-            $mdSidenav('left').close()
-                .then(function () {
-                });
+            $mdSidenav('left').close();
         };
         function buildToggler(navID) {
             var debounceFn =  $mdUtil.debounce(function(){
@@ -39,6 +37,7 @@ app.run(function ($rootScope, $ionicPlatform, $state, $location, User, $mdSidena
 
         $rootScope.disconnect = function () {
             delete window.localStorage['session'];
+            $mdSidenav('left').close();
             $state.go('login');
         };
         $rootScope.toolbarPrevious = function() {
@@ -51,12 +50,13 @@ app.run(function ($rootScope, $ionicPlatform, $state, $location, User, $mdSidena
         case 'localhost':
             $rootScope.baseUrl = $location.protocol()+"://"+$location.host()+":"+$location.port()+"/uni";
             $rootScope.mobileUrl = $rootScope.baseUrl+"/ionic/www";
-            $rootScope.apiUrl = 'http://localhost:1337';
+            $rootScope.apiUrl = 'http://localhost:1337/';
             break;
         default:
             $rootScope.baseUrl = $location.protocol()+"://"+$location.host()+":"+$location.port()+"/uni";
             $rootScope.mobileUrl = $rootScope.baseUrl+"/ionic/www";
-            $rootScope.apiUrl = 'http://localhost:1337';
+            //Use IP because digitalocean had once a problem with their DNS
+            $rootScope.apiUrl = 'http://37.139.7.15:1337/';
             break;
     }
 
@@ -65,22 +65,6 @@ app.run(function ($rootScope, $ionicPlatform, $state, $location, User, $mdSidena
         $rootScope.state = toState.name;
         $rootScope.previousState = from.name;
     });
-
-    $rootScope.user = null;
-    $rootScope.friends = [];
-    $rootScope.session = window.localStorage['session'];
-    if($rootScope.session) {
-        User.findOne($rootScope.session).then(function(response) {
-            if(response.status == 'success') {
-                $rootScope.user = response.data;
-                if($rootScope.state == 'login' || $rootScope.state == 'register')
-                    $state.go('app.home');
-            }
-            else {
-                delete window.localStorage['session'];
-            }
-        });
-    }
 });
 
 app.config(['$mdThemingProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider',
@@ -100,12 +84,28 @@ app.config(['$mdThemingProvider', '$stateProvider', '$urlRouterProvider', '$loca
             })
             .state('app', {
                 url:'/app',
+                abstract: true,
                 templateUrl: 'partials/app.html',
-                controller: 'homeCtrl'
+                controller: 'homeCtrl',
+                resolve: {
+                    user: function($rootScope, User) {
+                        var userSession = window.localStorage['session'];
+                        if(userSession)
+                            return User.findOne(userSession);
+                        else
+                            return null;
+                    },
+                    friends: function (user, Friend) {
+                        if(user)
+                            return Friend.find(user.data.id);
+                        else
+                            return null;
+                    }
+                }
             })
             .state('app.home', {
                 url:'/home',
-                templateUrl: 'partials/home.html',
+                templateUrl: 'partials/home.html'
             }).state('app.addFriends', {
                 url:'/add-friends',
                 templateUrl: 'partials/add-friends.html',

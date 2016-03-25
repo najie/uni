@@ -6,7 +6,7 @@ app.factory('User', function($rootScope, $q, $http) {
         login: function(pseudo, password) {
             console.log(pseudo, password);
             var deferred = $q.defer();
-            $http.post($rootScope.apiUrl+"/user/login/", {
+            $http.post($rootScope.apiUrl+"user/login/", {
                 pseudo: pseudo,
                 password: password
             })
@@ -25,7 +25,7 @@ app.factory('User', function($rootScope, $q, $http) {
         },
         register: function(pseudo, password) {
             var deferred = $q.defer();
-            $http.post($rootScope.apiUrl+"/user/", {
+            $http.post($rootScope.apiUrl+"user/", {
                 pseudo: pseudo,
                 password: password
             })
@@ -44,7 +44,7 @@ app.factory('User', function($rootScope, $q, $http) {
         },
         findOne: function(userId) {
             var deferred = $q.defer();
-            $http.get($rootScope.apiUrl+"/user/"+userId)
+            $http.get($rootScope.apiUrl+"user/"+userId)
                 .success(function(data) {
                     var response = {
                         status: 'success',
@@ -61,7 +61,7 @@ app.factory('User', function($rootScope, $q, $http) {
         },
         findByPseudo: function(pseudo) {
             var deferred = $q.defer();
-            $http.get($rootScope.apiUrl+"/user/", {
+            $http.get($rootScope.apiUrl+"user/", {
                 params: {
                     pseudo: pseudo
                 }

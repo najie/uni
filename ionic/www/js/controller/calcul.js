@@ -4,6 +4,7 @@
 app.controller('calculCtrl', function ($rootScope, $scope, $stateParams, $state, Friend) {
     $scope.result = "0";
     $scope.calculState = $stateParams.state;
+    $scope.friend = $rootScope.friends[$stateParams.friendIndex];
 
     if($scope.calculState == 'borrow') {
         $scope.buttonLabel = 'Emprunter';
@@ -42,13 +43,17 @@ app.controller('calculCtrl', function ($rootScope, $scope, $stateParams, $state,
 
     $scope.confirm = function () {
         if($scope.calculState == 'refound') {
+            console.log(1, $scope.friend);
             Friend.updateDebt($scope.friend.friend.id, $scope.result).then(function(response) {
+                console.log(2, response);
                 $scope.friends[$stateParams.friendIndex].owe = response.data.owe;
                 $state.go('app.home');
             });
         }
         else {
+            console.log(1);
             Friend.updateDebt($scope.friend.friend.id, '-'+$scope.result).then(function(response) {
+                console.log(2, response);
                 $scope.friends[$stateParams.friendIndex].owe = response.data.owe;
                 $state.go('app.home');
             });

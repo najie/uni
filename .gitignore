@@ -6,6 +6,8 @@ platforms/
 plugins/
 server/node_modules/
 ionic/node_modules/
+ionic/resources/android/
+ionic/resources/ios/
 .tmp
 .sass-cache
 ionic/www/lib/

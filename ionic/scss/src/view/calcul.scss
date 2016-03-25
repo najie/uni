@@ -1,18 +1,20 @@
-.pad-number {
-    background: rgb(228, 228, 228);
-    font-size: 2em;
-    font-weight: 200;
-}
-
-.owe {
-    text-align: center;
-    font-size: 3em;
-    padding: 15px 0;
-    &.borrow {
-        background: rgb(238,255,65);
+.calcul {
+    .pad-number {
+        background: rgb(228, 228, 228);
+        font-size: 2em;
+        font-weight: 200;
     }
-    &.refound {
-        background: rgb(0, 188, 212);
-        color: white;
+
+    .owe {
+        text-align: center;
+        font-size: 3em;
+        padding: 25px 0;
+        &.borrow {
+            background: rgb(238,255,65);
+        }
+        &.refound {
+            background: rgb(0, 188, 212);
+            color: white;
+        }
     }
 }

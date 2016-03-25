@@ -28,7 +28,7 @@ app.controller('registerCtrl', function ($rootScope, $scope, $state, User) {
                     console.log(response);
                     if(response.status == 'success') {
                         $rootScope.user = response.data;
-                        $state.go('home');
+                        $state.go('app.home');
                     }
                 });
             }

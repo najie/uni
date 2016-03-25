@@ -8,34 +8,40 @@
         <h2>
             <span>{{toolbarTitle}}</span>
         </h2>
-        <span flex></span>
-        <md-icon md-svg-icon="img/icons/check.svg" ng-click="confirm()"></md-icon>
     </div>
 </md-toolbar>
-<md-content>
-    <div class="owe number"
-         ng-class="{'refound': calculState == 'refound',
+<ion-content class="has-header scroll-100">
+    <div class="calcul">
+        <div class="owe number"
+             ng-class="{'refound': calculState == 'refound',
          'borrow': calculState == 'borrow'}">
-        {{result}} €
+            {{result}} €
+        </div>
+        <md-card>
+            <md-grid-list
+                md-cols-gt-md="12" md-cols="4" md-cols-md="8"
+                md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter="1px">
+                <md-grid-tile
+                    ng-repeat="i in [1,2,3,4,5,6,7,8,9,0]"
+                    class="pad-number"
+                    ng-click="calculate(i)">
+                    {{i}}
+                </md-grid-tile>
+                <md-grid-tile
+                    class="pad-number"
+                    ng-click="calculate(',')">
+                    .
+                </md-grid-tile>
+                <md-grid-tile
+                    class="clear"
+                    ng-click="result = '0'">
+                    CLEAR
+                </md-grid-tile>
+            </md-grid-list>
+        </md-card>
+
+        <md-button class="md-fab md-primary md-fab-bottom-right" ng-click="confirm()">
+            <md-icon md-svg-icon="img/icons/check.svg" style="color: white;"></md-icon>
+        </md-button>
     </div>
-    <md-grid-list
-        md-cols-gt-md="12" md-cols="3" md-cols-md="8"
-        md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter="1px">
-        <md-grid-tile
-            ng-repeat="i in [1,2,3,4,5,6,7,8,9,0]"
-            class="pad-number"
-            ng-click="calculate(i)">
-            {{i}}
-        </md-grid-tile>
-        <md-grid-tile
-            class="pad-number"
-            ng-click="calculate(',')">
-            .
-        </md-grid-tile>
-        <md-grid-tile
-            class="clear"
-            ng-click="result = '0'">
-            CLEAR
-        </md-grid-tile>
-    </md-grid-list>
-</md-content>
+</ion-content>

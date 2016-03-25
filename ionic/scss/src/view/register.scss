@@ -4,8 +4,15 @@
         margin: 10% 0 0;
         padding: 0 10%;
         text-align: left;
+
     }
     h2 {
         color: #fff;
+    }
+    label {
+        color: white;
+    }
+    input, input[type="password"] {
+        border-color: rgba(255, 255, 255, 0.62);
     }
 }

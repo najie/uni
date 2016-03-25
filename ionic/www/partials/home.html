@@ -11,43 +11,67 @@
         <md-icon class="material-icons" ui-sref="app.addFriends">person_add</md-icon>
     </div>
 </md-toolbar>
-<md-content flex class="home md-padding">
-    <div class="no-friend" ng-show="friends.length == 0">
-        <p class="md-body-1">
-            Pour commencer, ajoute tes amis
-        </p>
-        <div class="txt-center">
-            <md-button class="md-raised md-accent" ui-sref="addFriends">Rechercher des amis</md-button>
+<ion-content class="has-header">
+
+    <ion-refresher
+        pulling-text="Tire pour rafraîchir..."
+        pulling-icon="ion-ios-arrow-down"
+        spinner="crescent"
+        on-refresh="doRefresh()">
+    </ion-refresher>
+
+    <div class="home">
+        <div class="no-friend" ng-show="friends.length == 0">
+            <p class="md-body-1">
+                Pour commencer, ajoute tes amis
+            </p>
+            <div class="txt-center">
+                <md-button class="md-raised md-accent" ui-sref="app.addFriends">Rechercher des amis</md-button>
+            </div>
+        </div>
+        <div ng-repeat="friend in friends | orderBy:'friend.pseudo'" layout-padding>
+            <md-card ng-if="friend.status == 1">
+                <md-card-content>
+                    <h2 class="md-title">
+                        <span ng-show="friend.owe > 0" class="friend-status friend-status--oweyou">
+                            <span class="friend-status__pseudo">{{friend.friend.pseudo}}</span><br>
+                            <span class="friend-status__status">Te doit <span class="friend-status__number">{{friend.owe}}€</span></span>
+                        </span>
+                        <span ng-show="friend.owe < 0" class="friend-status friend-status--youowe">
+                            <span class="friend-status__pseudo">{{friend.friend.pseudo}}</span><br>
+                            <span class="friend-status__status">Tu lui dois <span class="friend-status__number">{{friend.owe*-1}}€</span></span>
+
+                        </span>
+                        <span ng-show="friend.owe == 0" class="friend-status friend-status--boncompte">
+                            <span class="friend-status__pseudo">{{friend.friend.pseudo}}</span><br>
+                            <span class="friend-status__status">Vous êtes en bon compte !</span>
+                        </span>
+                    </h2>
+                </md-card-content>
+                <div class="md-actions" layout="row" layout-align="end center">
+                    <md-button class="md-primary md-raised"
+                               ui-sref="app.calcul({state:'refound', friendIndex: $index})" aria-label="avancer">
+                        <span ng-if="friend.owe < 0">Rembourser</span>
+                        <span ng-if="friend.owe >= 0">Avancer</span>
+                    </md-button>
+                    <md-button class="md-accent md-raised"
+                               ui-sref="app.calcul({state:'borrow', friendIndex: $index})">Emprunter
+                    </md-button>
+                </div>
+            </md-card>
+            <md-card ng-if="friend.status == 0 && friend.fromId != user.id">
+                <md-card-content>
+                    <h2 class="md-title">{{friend.friend.pseudo}} vous demande en ami</h2>
+                </md-card-content>
+                <div class="md-actions" layout="row" layout-align="end center">
+                    <md-button class="md-primary md-raised"
+                               ng-click="acceptFriendRequest(friend.id)">Accepter
+                    </md-button>
+                    <md-button class="md-warn md-raised"
+                               ng-click="hideFriendRequest(friend.id)">Refuser
+                    </md-button>
+                </div>
+            </md-card>
         </div>
     </div>
-
-    <span ng-repeat="friend in friends">
-        <md-card ng-if="friend.status == 1">
-            <md-card-content>
-                <h2 class="md-title">{{friend.friend.pseudo}} •
-                    <span class="number">{{friend.owe}}</span> €</h2>
-            </md-card-content>
-            <div class="md-actions" layout="row" layout-align="end center">
-                <md-button class="md-primary md-raised"
-                           ui-sref="app.calcul({state:'refound', friendIndex: $index})" aria-label="avancer">
-                    <span ng-if="friend.owe < 0">Rembourser</span>
-                    <span ng-if="friend.owe >= 0">Avancer</span>
-                </md-button>
-                <md-button class="md-accent md-raised"
-                           ui-sref="app.calcul({state:'borrow', friendIndex: $index})">Emprunter</md-button>
-            </div>
-        </md-card>
-        <md-card ng-if="friend.status == 0 && friend.fromId != user.id">
-            <md-card-content>
-                <h2 class="md-title">{{friend.friend.pseudo}} vous demande en ami</h2>
-            </md-card-content>
-            <div class="md-actions" layout="row" layout-align="end center">
-                <md-button class="md-primary md-raised"
-                           ng-click="acceptFriendRequest(friend.id)">Accepter</md-button>
-                <md-button class="md-warn md-raised"
-                           ng-click="hideFriendRequest(friend.id)">Refuser</md-button>
-            </div>
-        </md-card>
-    </span>
-
-</md-content>
+</ion-content>

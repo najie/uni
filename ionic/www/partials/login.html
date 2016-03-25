@@ -1,25 +1,28 @@
-<div class="login">
-    <md-content>
-        <h1 class="md-display-3">Uni</h1>
-        <h2 class="md-subhead">Les bons comptes entre amis</h2>
-        <form ng-submit="submit()" layout="column">
-            <md-input-container flex>
-                <label>Pseudo</label>
-                <input ng-model="login.pseudo">
-                <div ng-messages="error" role="alert">
-                    <div ng-message="badPseudo">Mauvais pseudo.</div>
-                </div>
-            </md-input-container>
-            <md-input-container flex>
-                <label>Mot de passe</label>
-                <input type="password" ng-model="login.password">
-                <div ng-messages="error" role="alert">
-                    <div ng-message="badPassword">Mauvais mot de passe.</div>
-                </div>
-            </md-input-container>
+<ion-pane class="login-bg">
+    <ion-content>
+        <div class="login">
+            <h1 class="md-display-3">Uni</h1>
+            <h2 class="md-subhead">Bons comptes entre amis</h2>
+            <form ng-submit="submit()" layout="column">
+                <md-input-container flex>
+                    <label>Pseudo</label>
+                    <input ng-model="login.pseudo">
+                    <div ng-messages="error" role="alert">
+                        <div ng-message="badPseudo">Mauvais pseudo.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Mot de passe</label>
+                    <input type="password" ng-model="login.password">
+                    <div ng-messages="error" role="alert">
+                        <div ng-message="badPassword">Mauvais mot de passe.</div>
+                    </div>
+                </md-input-container>
 
-            <md-button class="md-raised md-accent btn-center" type="submit">Connexion</md-button>
-        </form>
-        <md-button ui-sref="register" class="md-accent">Je veux créer un compte</md-button>
-    </md-content>
-</div>
+                <md-button class="md-raised md-accent btn-center" type="submit">Connexion</md-button>
+            </form>
+            <md-button ui-sref="register" class="md-accent">Je veux créer un compte</md-button>
+        </div>
+    </ion-content>
+</ion-pane>
+

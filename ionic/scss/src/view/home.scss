@@ -9,4 +9,31 @@
         background-color: #F5F5F5;
     }
 
+    .friend-status {
+        &__pseudo {
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: 800;
+            text-transform: capitalize;
+        }
+        &__number {
+            font-family: RobotoDraft;
+            font-weight: 800;
+        }
+        &__status {
+            font-size: 0.85em;
+        }
+        &--oweyou {
+            .friend-status__status {
+                color: #13AA13;
+            }
+        }
+        &--youowe {
+            .friend-status__status {
+                color: #B48238;
+            }
+        }
+    }
+
 }
+

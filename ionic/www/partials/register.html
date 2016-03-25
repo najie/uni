@@ -1,38 +1,42 @@
-<div class="register">
-    <md-content>
-        <h1 class="md-display-3">Uni</h1>
-        <h2 class="md-subhead">Choisi un pseudo & un mot de passe</h2>
-        <form ng-submit="submit()" name="registerForm" layout="column">
-            <md-input-container flex>
-                <label>Pseudo</label>
-                <input ng-model="register.pseudo" name="pseudo" required>
-                <div ng-messages="registerForm.pseudo.$error" role="alert" ng-show="registerForm.pseudo.$touched">
-                    <div ng-message="required">Champ obligatoire.</div>
-                </div>
-                <div ng-messages="error" role="alert">
-                    <div ng-message="pseudoAlreadyTaken">Ce pseudo est déjà pris</div>
-                </div>
-            </md-input-container>
-            <md-input-container flex>
-                <label>Mot de passe</label>
-                <input type="password" ng-model="register.password" name="password" required>
-                <div ng-messages="registerForm.password.$error" role="alert" ng-show="registerForm.password.$touched">
-                    <div ng-message="required">Champ obligatoire.</div>
-                </div>
-            </md-input-container>
-            <md-input-container flex>
-                <label>Répète ton mot de passe</label>
-                <input type="password" ng-model="register.password2" name="password2" required>
-                <div ng-messages="error" role="alert">
-                    <div ng-message="passwordNotEqual">Les mots de passe sont différent.</div>
-                </div>
-                <div ng-messages="registerForm.password2.$error" role="alert" ng-show="registerForm.password2.$touched">
-                    <div ng-message="required">Champ obligatoire.</div>
-                </div>
-            </md-input-container>
+<ion-pane class="login-bg">
+    <ion-content>
+        <div class="login">
+            <h1 class="md-display-3">Uni</h1>
+            <h2 class="md-subhead">Choisi un pseudo & un mot de passe</h2>
+            <form ng-submit="submit()" name="registerForm" layout="column">
+                <md-input-container flex>
+                    <label>Pseudo</label>
+                    <input ng-model="register.pseudo" name="pseudo" required>
+                    <div ng-messages="registerForm.pseudo.$error" role="alert" ng-show="registerForm.pseudo.$touched">
+                        <div ng-message="required">Champ obligatoire.</div>
+                    </div>
+                    <div ng-messages="error" role="alert">
+                        <div ng-message="pseudoAlreadyTaken">Ce pseudo est déjà pris</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Mot de passe</label>
+                    <input type="password" ng-model="register.password" name="password" required>
+                    <div ng-messages="registerForm.password.$error" role="alert"
+                         ng-show="registerForm.password.$touched">
+                        <div ng-message="required">Champ obligatoire.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Répète ton mot de passe</label>
+                    <input type="password" ng-model="register.password2" name="password2" required>
+                    <div ng-messages="error" role="alert">
+                        <div ng-message="passwordNotEqual">Les mots de passe sont différent.</div>
+                    </div>
+                    <div ng-messages="registerForm.password2.$error" role="alert"
+                         ng-show="registerForm.password2.$touched">
+                        <div ng-message="required">Champ obligatoire.</div>
+                    </div>
+                </md-input-container>
 
-            <md-button class="md-raised md-accent btn-center" type="submit">Inscription</md-button>
-        </form>
-        <md-button ui-sref="login" class="md-accent">J'ai déjà un compte</md-button>
-    </md-content>
-</div>
+                <md-button class="md-raised md-accent btn-center" type="submit">Inscription</md-button>
+            </form>
+            <md-button ui-sref="login" class="md-accent">J'ai déjà un compte</md-button>
+        </div>
+    </ion-content>
+</ion-pane>
